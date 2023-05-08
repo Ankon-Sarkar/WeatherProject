@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/darkly/bootstrap.min.css" integrity="sha512-YRcmztDXzJQCCBk2YUiEAY+r74gu/c9UULMPTeLsAp/Tw5eXiGkYMPC4tc4Kp1jx/V9xjEOCVpBe4r6Lx6n5dA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">WeatherApp</a>
+        </div>
+      </nav>
+      <br> <br> <br>
+     
+      <div id="jumbotron" class="jumbotron" style="text-align: center; margin-top:-50px">
+    
+        <img src="{% static 'images/weather.png' %}" class="image" style="width:100px; margin-bottom:-50px; ">
+      </div>
+      <br> <br> <br>
+
+      <div>
+        <form method="post" class="col-md">
+          {% csrf_token %}
+          <div class=" input-group">
+    
+          <input type="text" class="form-control" name="city" placeholder="Choose Your City ...">
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-primary">Search</button>
+          </div>
+          </div>
+        </form>
+        
+
+      <br>
+
+      {% if response %}
+      <div class="col d-flex justify-content-center">
+      <div class="card text-white bg-success mb-3 text-center" style="max-width: 30rem;">
+        <div class="card-header">Today's Weather</div>
+        <div class="card-body">
+          <h4 class="card-title">{{city}}</h4>
+          <h4><span class="badge badge-primary">Country Code :</span> {{country_code}}</h4>
+        <h4><span class="badge badge-primary">Coordinates [X,Y] :</span> {{coordinate}}</h4>
+        <h4><span class="badge badge-primary">Temperature in Celsius :</span> {{temp}}</h4>
+        <h4><span class="badge badge-primary">Pressure :</span> {{pressure}} </h4>
+        <h4><span class="badge badge-primary">Humidity : </span> {{humidity}}</h4>
+        <h4><span class="badge badge-primary">Forecast : </span> {{main}} <img
+          src="http://openweathermap.org/img/w/{{icon}}.png" alt="Image" style="width:70px"></h4>
+      <h4><span class="badge badge-primary">Description : </span> {{description}}</h4>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if response is False%}
+      <div class="col d-flex justify-content-center">
+      <div class="card text-white bg-danger mb-3 text-center" style="max-width: 30rem;">
+        <div class="card-header">Invalid</div>
+        <div class="card-body">
+          <h1>{{msg}}</h1>
+        </div>
+      </div>
+    </div>
+      
+      {% endif %}
+    </div>
+  </body>
+</html>
